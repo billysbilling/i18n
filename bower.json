@@ -1,0 +1,24 @@
+{
+  "name": "i18n",
+  "version": "0.0.1",
+  "homepage": "https://github.com/billysbilling/i18n",
+  "main": "src/js/REPLACE-ME.js",
+  "billy-builder": {
+    "include": [
+      "src/js",
+      "src/templates"
+    ]
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests",
+    "Gruntfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "ember": "billysbilling/bower-ember#master"
+  }
+}
