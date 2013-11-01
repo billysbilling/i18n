@@ -22,7 +22,7 @@ module.exports = function(moduleName, localesPath) {
             } else if (arguments.length === 1) {
                 //Setter
                 currentLocale = newLocale;
-                var translations = customTranslations[newLocale] || require(localesPath + '/' + currentLocale);
+                var translations = customTranslations[newLocale] || requireTranslations(localesPath, currentLocale, moduleName === null);
                 if (moduleName === null) {
                     _.extend(Ember.I18n.translations, translations);
                 } else {
@@ -43,3 +43,15 @@ module.exports = function(moduleName, localesPath) {
     
     return lang;
 };
+
+function requireTranslations(localesPath, locale, ignoreNonExisting) {
+    try {
+        return require(localesPath + '/' + locale)
+    } catch (e) {
+        if (ignoreNonExisting) {
+            return {};
+        } else {
+            throw e;
+        }
+    }
+}
