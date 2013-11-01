@@ -1,14 +1,19 @@
-var langs = {};
+var _ = require('lodash');
+
+var defaultLang,
+    langs = {};
 
 module.exports = function(moduleName, localesPath) {
-    if (langs[moduleName]) {
+    if (moduleName === null && defaultLang) {
+        return defaultLang;
+    } else if (langs[moduleName]) {
         return langs[moduleName];
     }
     
     var lang = (function() {
         var currentLocale;
         
-        var customLocaleData = {};
+        var customTranslations = {};
         
         return function(newLocale, data) {
             if (arguments.length === 0) {
@@ -17,15 +22,24 @@ module.exports = function(moduleName, localesPath) {
             } else if (arguments.length === 1) {
                 //Setter
                 currentLocale = newLocale;
-                Ember.I18n.translations[moduleName] = customLocaleData[newLocale] || require(localesPath + '/' + currentLocale);
+                var translations = customTranslations[newLocale] || require(localesPath + '/' + currentLocale);
+                if (moduleName === null) {
+                    _.extend(Ember.I18n.translations, translations);
+                } else {
+                    Ember.I18n.translations[moduleName] = translations;
+                }
             } else if (arguments.length === 2) {
                 //Register custom locale
-                customLocaleData[newLocale] = data;
+                customTranslations[newLocale] = data;
             }
         };
     })();
     
-    langs[moduleName] = lang;
+    if (moduleName === null) {
+        defaultLang = lang;
+    } else {
+        langs[moduleName] = lang;
+    }
     
     return lang;
 };

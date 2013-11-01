@@ -5,7 +5,7 @@ var langFactory = require('./lang-factory'),
 module.exports = function(moduleName, localesPath) {
     var m = {
         lang: langFactory(moduleName, localesPath),
-        t: tFactory(moduleName+'.'),
+        t: tFactory(moduleName === null ? '' : moduleName+'.'),
         tProperty: tProperty
     };
     
