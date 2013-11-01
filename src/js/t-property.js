@@ -1,4 +1,4 @@
-var t = require('./t');
+var t = require('./t-factory')('');
 
 module.exports = function(dependentKey, defaultValue) {
     return Ember.computed(dependentKey+'T', function() {
