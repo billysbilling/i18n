@@ -1,3 +1,5 @@
+var t = require('./t');
+
 module.exports = function(dependentKey, defaultValue) {
     return Ember.computed(dependentKey+'T', function() {
         var key = this.get(dependentKey+'T');
