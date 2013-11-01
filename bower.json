@@ -2,7 +2,7 @@
   "name": "i18n",
   "version": "0.0.1",
   "homepage": "https://github.com/billysbilling/i18n",
-  "main": "src/js/REPLACE-ME.js",
+  "main": "src/js/i18n.js",
   "billy-builder": {
     "include": [
       "src/js",
