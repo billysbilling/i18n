@@ -1,5 +1,5 @@
-var langFactory = require('lang-factory'),
-    tFactory = require('t-factory'),
+var langFactory = require('./lang-factory'),
+    tFactory = require('./t-factory'),
     tProperty = require('./t-property');
 
 module.exports = function(moduleName, localesPath) {
