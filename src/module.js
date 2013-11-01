@@ -1,13 +1,13 @@
 var langFactory = require('lang-factory'),
     tFactory = require('t-factory'),
-    tPropertyFactory = require('./t-property-factory');
+    tProperty = require('./t-property');
 
 module.exports = function(moduleName, localesPath) {
     var lang = langFactory(moduleName, localesPath);
     
     lang.t = tFactory(moduleName + '.');
     
-    lang.tProperty = tPropertyFactory(moduleName + '.');
+    lang.tProperty = tProperty;
     
     lang('en_US');
     
