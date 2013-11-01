@@ -1,6 +1,6 @@
 require('ember-i18n');
 
-var mod = require('module');
+var mod = require('./module');
 
 module.exports = mod('default', 'src/locales');
 
