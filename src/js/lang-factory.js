@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 var defaultLang,
     langs = {};
 
@@ -24,7 +22,10 @@ module.exports = function(moduleName, localesPath) {
                 currentLocale = newLocale;
                 var translations = customTranslations[newLocale] || requireTranslations(localesPath, currentLocale, moduleName === null);
                 if (moduleName === null) {
-                    _.extend(Ember.I18n.translations, translations);
+                    for (var k in translations) {
+                        if (!translations.hasOwnProperty(k)) continue;
+                        Ember.I18n.translations[k] = translations[k];
+                    }
                 } else {
                     Ember.I18n.translations[moduleName] = translations;
                 }
