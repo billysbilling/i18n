@@ -19,6 +19,6 @@
     "package.json"
   ],
   "dependencies": {
-    "ember-i18n": "billysbilling/bower-ember-i18n#master"
+    "ember-i18n": "billysbilling/bower-ember-i18n#~1.5.0"
   }
 }
