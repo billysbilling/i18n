@@ -5,8 +5,7 @@
   "main": "src/js/i18n.js",
   "billy-builder": {
     "include": [
-      "src/js",
-      "src/templates"
+      "src/js"
     ]
   },
   "license": "MIT",
@@ -19,6 +18,8 @@
     "package.json"
   ],
   "dependencies": {
-    "ember-i18n": "billysbilling/bower-ember-i18n#~1.5.0"
+    "ember-i18n": "billysbilling/bower-ember-i18n#~1.5.0",
+    "i18n-context": "billysbilling/i18n-context#>=1.0 <2.0",
+    "storage": "billysbilling/storage#master"
   }
 }
