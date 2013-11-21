@@ -20,6 +20,6 @@
   "dependencies": {
     "ember-i18n": "billysbilling/bower-ember-i18n#~1.5.0",
     "i18n-context": "billysbilling/i18n-context#>=1.0 <2.0",
-    "storage": "billysbilling/storage#master"
+    "storage": "billysbilling/storage#~0.1.0"
   }
 }
