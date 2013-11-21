@@ -1,8 +1,6 @@
 require('ember-i18n');
 
-var moment = require('momentjs'),
-    numeral = require('numeral'),
-    storage = require('storage'),
+var storage = require('storage'),
     i18nContext = require('i18n-context');
 
 var currentLocale,
