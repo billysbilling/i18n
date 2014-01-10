@@ -14,12 +14,12 @@ QUnit.module('i18n', {
     },
     teardown: function() {
         i18n.destroy();
-        
+
         callsA = [];
         callsB = [];
-        
+
         componentContext.destroy();
-        
+
         storage.remove('locale');
     }
 });
@@ -68,9 +68,22 @@ test('init() falls back to en_US', function() {
     assertEnUs();
 });
 
+test('normalize() converts to da_DK', function() {
+    equal(i18n.normalize('da-dk'), 'da_DK');
+    equal(i18n.normalize('da-Dk'), 'da_DK');
+    equal(i18n.normalize('Da-Dk'), 'da_DK');
+    equal(i18n.normalize('da-DK'), 'da_DK');
+    equal(i18n.normalize('DA-DK'), 'da_DK');
+    equal(i18n.normalize('da_dk'), 'da_DK');
+    equal(i18n.normalize('da_Dk'), 'da_DK');
+    equal(i18n.normalize('Da_Dk'), 'da_DK');
+    equal(i18n.normalize('da_DK'), 'da_DK');
+    equal(i18n.normalize('DA_DK'), 'da_DK');
+});
+
 test('Set locale', function() {
     init();
-    
+
     i18n.locale('da_DK');
 
     assertDaDk();
@@ -133,7 +146,7 @@ test('Listeners are removed', function() {
     deepEqual(callsB, []);
 
     i18n.removeChangeListener(listenerA);
-    
+
     i18n.locale('da_DK');
 
     deepEqual(callsA, [['en_US', 'en']]);
