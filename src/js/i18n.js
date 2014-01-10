@@ -9,6 +9,7 @@ var currentLocale = null,
 
 module.exports = {
     init: init,
+    normalize: normalize,
     destroy: destroy,
     locale: locale,
     addChangeListener: addChangeListener,
@@ -19,7 +20,18 @@ module.exports = {
 
 function init(localesPath) {
     mainContext = i18nContext(null, localesPath);
-    locale(storage('locale') || 'en_US');
+    var userLocale = storage('locale') || window.navigator.language || window.navigator.userLanguage || 'en_US';
+    userLocale = normalize(userLocale);
+    locale(userLocale);
+}
+
+function normalize(locale) {
+    if (locale.match(/-|_/)) {
+        // Turn stuff like da-dk/da-DK/da_dk into da_DK
+        var parts = locale.split(/-|_/);
+        locale = parts[0].toLowerCase() + '_' + parts[1].toUpperCase();
+    }
+    return locale;
 }
 
 function destroy() {
@@ -46,16 +58,16 @@ function locale(newLocale) {
                     throw e;
                 }
             }
-            
+
             currentLocale = newLocale;
             storage('locale', newLocale);
-    
+
             changeListeners.forEach(function(listener) {
                 listener.call(null, newLocale, toShort(newLocale));
             });
         }
     }
-    
+
     return currentLocale;
 }
 
