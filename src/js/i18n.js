@@ -7,6 +7,11 @@ var currentLocale = null,
     mainContext = null,
     changeListeners = [];
 
+var langToLocale = {
+    'en': 'en_US',
+    'da': 'da_DK'
+};
+
 module.exports = {
     init: init,
     normalize: normalize,
@@ -22,6 +27,10 @@ function init(localesPath) {
     mainContext = i18nContext(null, localesPath);
     var userLocale = storage('locale') || window.navigator.language || window.navigator.userLanguage || 'en_US';
     userLocale = normalize(userLocale);
+    //Resolve lang -> locale
+    if (langToLocale[userLocale]) {
+        userLocale = langToLocale[userLocale];
+    }
     locale(userLocale);
 }
 
@@ -30,6 +39,9 @@ function normalize(locale) {
         // Turn stuff like da-dk/da-DK/da_dk into da_DK
         var parts = locale.split(/-|_/);
         locale = parts[0].toLowerCase() + '_' + parts[1].toUpperCase();
+    } else {
+        // Just lowercase for two-character codes
+        locale = locale.toLowerCase();
     }
     return locale;
 }
