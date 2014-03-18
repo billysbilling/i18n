@@ -17,6 +17,7 @@ module.exports = {
     normalize: normalize,
     destroy: destroy,
     locale: locale,
+    localeIsAssumed: localeIsAssumed,
     addChangeListener: addChangeListener,
     removeChangeListener: removeChangeListener,
     t: t,
@@ -25,13 +26,13 @@ module.exports = {
 
 function init(localesPath) {
     mainContext = i18nContext(null, localesPath);
-    var userLocale = storage('locale') || window.navigator.language || window.navigator.userLanguage || 'en_US';
+    var userLocale = storage('locale') || storage('assumedLocale') || window.navigator.language || window.navigator.userLanguage || 'en_US';
     userLocale = normalize(userLocale);
     //Resolve lang -> locale
     if (langToLocale[userLocale]) {
         userLocale = langToLocale[userLocale];
     }
-    locale(userLocale);
+    locale(userLocale, !storage('locale'));
 }
 
 function normalize(locale) {
@@ -55,8 +56,8 @@ function destroy() {
     i18nContext.setAllLocales('en_US');
 }
 
-function locale(newLocale) {
-    if (arguments.length === 1) {
+function locale(newLocale, isAssumed) {
+    if (arguments.length >= 1) {
         if (newLocale !== currentLocale) {
             try {
                 loadLocale(newLocale);
@@ -65,14 +66,18 @@ function locale(newLocale) {
                     console.error('Could not load locale `'+newLocale+'`. Falling back to `en_US`. Error stack:');
                     console.log(e.stack);
                     currentLocale = null;
-                    return locale('en_US');
+                    return locale('en_US', true);
                 } else {
                     throw e;
                 }
             }
 
             currentLocale = newLocale;
-            storage('locale', newLocale);
+            if (isAssumed) {
+                storage('assumedLocale', newLocale);
+            } else {
+                storage('locale', newLocale);
+            }
 
             changeListeners.forEach(function(listener) {
                 listener.call(null, newLocale, toShort(newLocale));
@@ -81,6 +86,10 @@ function locale(newLocale) {
     }
 
     return currentLocale;
+}
+
+function localeIsAssumed() {
+    return storage('assumedLocale') && !storage('locale');
 }
 
 function loadLocale(newLocale) {

@@ -28,30 +28,38 @@ function init() {
     i18n.init(require.resolve('./main-locales'));
 }
 
-function assertEnUs() {
+function assertEnUs(isAssumed) {
     equal(i18n.locale(), 'en_US');
     equal(i18n.t('hi', {name: 'John'}), 'Hi John');
 
     equal(componentContext.locale(), 'en_US');
     equal(componentContext.t('save'), 'Save');
 
-    equal(storage('locale'), 'en_US');
+    if (isAssumed) {
+        equal(storage('assumedLocale'), 'en_US');
+    } else {
+        equal(storage('locale'), 'en_US');
+    }
 }
 
-function assertDaDk() {
+function assertDaDk(isAssumed) {
     equal(i18n.locale(), 'da_DK');
     equal(i18n.t('hi', {name: 'John'}), 'Hej John');
 
     equal(componentContext.locale(), 'da_DK');
     equal(componentContext.t('save'), 'Gem');
 
-    equal(storage('locale'), 'da_DK');
+    if (isAssumed) {
+        equal(storage('assumedLocale'), 'da_DK');
+    } else {
+        equal(storage('locale'), 'da_DK');
+    }
 }
 
 test('init() defaults to en_US', function() {
     init();
 
-    assertEnUs();
+    assertEnUs(true);
 });
 
 test('init() uses storage locale', function() {
@@ -59,13 +67,13 @@ test('init() uses storage locale', function() {
 
     init();
 
-    assertDaDk();
+    assertDaDk(false);
 });
 
 test('init() falls back to en_US', function() {
     init();
 
-    assertEnUs();
+    assertEnUs(true);
 });
 
 test('normalize() converts to da_DK', function() {
@@ -86,7 +94,7 @@ test('Set locale', function() {
 
     i18n.locale('da_DK');
 
-    assertDaDk();
+    assertDaDk(false);
 });
 
 test('Set locale to invalid locale falls back to en_US', function() {
@@ -94,7 +102,7 @@ test('Set locale to invalid locale falls back to en_US', function() {
 
     i18n.locale('te_ST');
 
-    assertEnUs();
+    assertEnUs(true);
 });
 
 test('Listener is only called when locale actually changes', function() {
