@@ -1,5 +1,3 @@
-require('ember-i18n');
-
 var storage = require('storage'),
     i18nContext = require('i18n-context');
 
@@ -84,7 +82,7 @@ function locale(newLocale) {
 }
 
 function loadLocale(newLocale) {
-    CLDR.defaultLanguage = toShort(newLocale);
+    Em.I18n.locale = toShort(newLocale);
 
     i18nContext.setAllLocales(newLocale);
 }
