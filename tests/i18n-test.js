@@ -1,6 +1,10 @@
-var i18nContext = require('i18n-context'),
-    storage = require('storage'),
-    i18n = require('../src/js/i18n');
+var i18nContext = bbRequire('i18n-context'),
+    storage = bbRequire('storage'),
+    i18n = bbRequire('i18n');
+
+window.ENV = {
+    isTest: true
+}
 
 var componentContext,
     callsA = [],
@@ -10,7 +14,7 @@ var componentContext,
 
 QUnit.module('i18n', {
     setup: function() {
-        componentContext = i18nContext('component', require.resolve('./component-locales'));
+        componentContext = i18nContext('component', 'component-locales');
     },
     teardown: function() {
         i18n.destroy();
@@ -25,7 +29,7 @@ QUnit.module('i18n', {
 });
 
 function init() {
-    i18n.init(require.resolve('./main-locales'));
+    i18n.init('main-locales');
 }
 
 function assertEnUs() {

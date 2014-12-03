@@ -18,8 +18,13 @@
     "package.json"
   ],
   "dependencies": {
-    "ember-i18n": "billysbilling/bower-ember-i18n#~1.5.0",
-    "i18n-context": "billysbilling/i18n-context#>=1.0 <2.0",
+    "ember": ">=1.9.0-beta.2",
+    "ember-i18n": "jamesarosen/ember-i18n#>=3.0.0-beta2",
+    "i18n-context": "billysbilling/i18n-context#ember-1.9",
     "storage": "billysbilling/storage#~0.1.0"
+  },
+  "resolutions": {
+    "ember-i18n": ">=3.0.0-beta2",
+    "handlebars": ">= 2.0.0 < 3.0.0"
   }
 }
